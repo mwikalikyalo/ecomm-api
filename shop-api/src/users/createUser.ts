@@ -1,4 +1,4 @@
-import { User } from './user.entity';
+import { User } from '../users/users.entity';
 
 export class CreateUser extends User {
   save() {

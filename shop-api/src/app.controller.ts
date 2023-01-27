@@ -1,7 +1,7 @@
 import { Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
-import { UserController } from './user/user.controller';
-import { UserService } from './user/user.service';
+import { UserController } from './users/users.controller';
+import { UserService } from './users/users.service';
 
 @Controller()
 export class AppController {
