@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { UserService } from './users/users.service';
 
@@ -14,5 +14,10 @@ export class AppController {
   @Get(':/username')
   getUserByUsername(@Param('username') username: string) {
     return this.userService.getUserByUsername(username);
-}
+  }
+
+  @Post()
+  async registerUser(@Body() createdUser:any){
+    return this.userService.registerUser(createdUser)
+  }
 }

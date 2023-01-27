@@ -16,7 +16,6 @@ exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const createUser_1 = require("./createUser");
-const passport_1 = require("@nestjs/passport");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -29,7 +28,6 @@ let UserController = class UserController {
     }
 };
 __decorate([
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     (0, common_1.Get)('username'),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),

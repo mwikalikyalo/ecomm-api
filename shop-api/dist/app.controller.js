@@ -27,6 +27,9 @@ let AppController = class AppController {
     getUserByUsername(username) {
         return this.userService.getUserByUsername(username);
     }
+    async registerUser(createdUser) {
+        return this.userService.registerUser(createdUser);
+    }
 };
 __decorate([
     (0, common_1.Get)(),
@@ -41,6 +44,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getUserByUsername", null);
+__decorate([
+    (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "registerUser", null);
 AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService, users_service_1.UserService])

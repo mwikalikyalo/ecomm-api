@@ -1,5 +1,5 @@
 import { Injectable,BadRequestException } from '@nestjs/common';
-import { CreateUser } from './createUser';
+import { CreateUser } from './createUser.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import {  Model } from 'mongoose';
 import { HashService } from './hash.service';
