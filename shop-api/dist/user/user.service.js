@@ -12,20 +12,37 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppService = void 0;
+exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const user_schema_1 = require("./user/user.schema");
-let AppService = class AppService {
-    constructor(userModel) {
+const hash_service_1 = require("./hash.service");
+const user_schema_1 = require("./user.schema");
+let UserService = class UserService {
+    constructor(userModel, hashService) {
         this.userModel = userModel;
+        this.hashService = hashService;
+    }
+    async getUserByUsername(username) {
+        return this.userModel.findOne({
+            username
+        })
+            .exec();
+    }
+    async registerUser(createUser) {
+        const createdUser = new this.userModel(createUser);
+        const user = await this.getUserByUsername(createdUser.username);
+        if (user) {
+            throw new common_1.BadRequestException();
+        }
+        createUser.password = await this.hashService.hashPassword(createUser.password);
+        return createUser.save();
     }
 };
-AppService = __decorate([
+UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
-], AppService);
-exports.AppService = AppService;
-//# sourceMappingURL=app.service.js.map
+    __metadata("design:paramtypes", [mongoose_2.Model, hash_service_1.HashService])
+], UserService);
+exports.UserService = UserService;
+//# sourceMappingURL=user.service.js.map

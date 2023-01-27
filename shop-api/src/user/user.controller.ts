@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { CreateUser } from './createUser';
 import { AuthGuard } from '@nestjs/passport';
 
-@Controller('regester')
+@Controller('register')
 export class UserController {
   constructor(private readonly userService: UserService) {}
   @UseGuards(AuthGuard('jwt'))

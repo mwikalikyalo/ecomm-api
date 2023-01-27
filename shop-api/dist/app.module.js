@@ -10,13 +10,28 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
+const mongoose_1 = require("@nestjs/mongoose");
+const user_schema_1 = require("./user/user.schema");
+const user_service_1 = require("./user/user.service");
+const hash_service_1 = require("./user/hash.service");
+const user_controller_1 = require("./user/user.controller");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        imports: [
+            mongoose_1.MongooseModule.forRoot('mongodb+srv://mwikalikyalo:ch1ch1sam234@cluster0.es6xz7b.mongodb.net/?retryWrites=true&w=majority/auth'),
+            mongoose_1.MongooseModule.forFeature([{ name: user_schema_1.User.name, schema: user_schema_1.UserSchema }]),
+        ],
+        controllers: [
+            app_controller_1.AppController,
+            user_controller_1.UserController
+        ],
+        providers: [
+            app_service_1.AppService,
+            user_service_1.UserService,
+            hash_service_1.HashService,
+        ],
     })
 ], AppModule);
 exports.AppModule = AppModule;
