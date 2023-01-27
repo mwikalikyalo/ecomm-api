@@ -21,15 +21,17 @@
 /// <reference types="mongoose/types/utility" />
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
-/// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
-import { UserService } from './user.service';
 import { CreateUser } from './createUser';
-export declare class UserController {
-    private readonly userService;
-    constructor(userService: UserService);
-    getUserByUsername(param: any): Promise<import("./user.schema").User & import("mongoose").Document<any, any, any> & {
+import { Model } from 'mongoose';
+import { HashService } from './hash.service';
+import { User, UserDocument } from '../users/users.schema';
+export declare class UserService {
+    private userModel;
+    private hashService;
+    constructor(userModel: Model<UserDocument>, hashService: HashService);
+    getUserByUsername(username: string): Promise<User & import("mongoose").Document<any, any, any> & {
         _id: import("mongoose").Types.ObjectId;
     }>;
-    registerUser(createdUser: CreateUser): Promise<void>;
+    registerUser(createUser: CreateUser): Promise<void>;
 }

@@ -8,31 +8,42 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
-const user_controller_1 = require("./user/user.controller");
-const user_service_1 = require("./user/user.service");
+const users_service_1 = require("./users/users.service");
 let AppController = class AppController {
-    constructor(appService, userService, userController) {
+    constructor(appService, userService) {
         this.appService = appService;
         this.userService = userService;
-        this.userController = userController;
     }
-    registerUser(createdUser) {
-        return this.userService.registerUser(createdUser);
+    getHello() {
+        return this.appService.getHello();
+    }
+    getUserByUsername(username) {
+        return this.userService.getUserByUsername(username);
     }
 };
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.Get)(),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", String)
+], AppController.prototype, "getHello", null);
+__decorate([
+    (0, common_1.Get)(':/username'),
+    __param(0, (0, common_1.Param)('username')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], AppController.prototype, "registerUser", null);
+], AppController.prototype, "getUserByUsername", null);
 AppController = __decorate([
     (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [app_service_1.AppService, user_service_1.UserService, user_controller_1.UserController])
+    __metadata("design:paramtypes", [app_service_1.AppService, users_service_1.UserService])
 ], AppController);
 exports.AppController = AppController;
 //# sourceMappingURL=app.controller.js.map

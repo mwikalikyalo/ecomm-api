@@ -1,10 +1,11 @@
 import { AppService } from './app.service';
-import { UserController } from './user/user.controller';
-import { UserService } from './user/user.service';
+import { UserService } from './users/users.service';
 export declare class AppController {
     private readonly appService;
-    private readonly userService;
-    private userController;
-    constructor(appService: AppService, userService: UserService, userController: UserController);
-    registerUser(createdUser: any): Promise<void>;
+    private userService;
+    constructor(appService: AppService, userService: UserService);
+    getHello(): string;
+    getUserByUsername(username: string): Promise<import("./users/users.schema").User & import("mongoose").Document<any, any, any> & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
 }

@@ -16,15 +16,18 @@ exports.AppService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const user_schema_1 = require("./user/user.schema");
+const users_schema_1 = require("./users/users.schema");
 let AppService = class AppService {
     constructor(userModel) {
         this.userModel = userModel;
     }
+    getHello() {
+        return 'Hello World!';
+    }
 };
 AppService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
+    __param(0, (0, mongoose_1.InjectModel)(users_schema_1.User.name)),
     __metadata("design:paramtypes", [mongoose_2.Model])
 ], AppService);
 exports.AppService = AppService;
