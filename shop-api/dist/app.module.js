@@ -11,22 +11,25 @@ const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const mongoose_1 = require("@nestjs/mongoose");
-const users_schema_1 = require("./users/users.schema");
-const users_module_1 = require("./users/users.module");
+const user_entity_1 = require("./user/entities/user.entity");
 const delivery_module_1 = require("./delivery/delivery.module");
 const card_module_1 = require("./card/card.module");
 const mobile_module_1 = require("./mobile/mobile.module");
+const user_module_1 = require("./user/user.module");
+const auth_module_1 = require("./auth/auth.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            users_module_1.UsersModule,
-            mongoose_1.MongooseModule.forRoot('mongodb+srv://mwikalikyalo:ch1ch1sam234@cluster0.es6xz7b.mongodb.net/?retryWrites=true&w=majority/auth'),
-            mongoose_1.MongooseModule.forFeature([{ name: users_schema_1.User.name, schema: users_schema_1.UserSchema }]),
+            user_module_1.UserModule,
+            mongoose_1.MongooseModule.forRoot('mongodb://localhost/shop-api'),
+            mongoose_1.MongooseModule.forFeature([{ name: user_entity_1.User.name, schema: user_entity_1.UserSchema }]),
             delivery_module_1.DeliveryModule,
             card_module_1.CardModule,
             mobile_module_1.MobileModule,
+            user_module_1.UserModule,
+            auth_module_1.AuthModule,
         ],
         controllers: [
             app_controller_1.AppController,

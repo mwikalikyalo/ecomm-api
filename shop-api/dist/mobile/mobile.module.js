@@ -8,10 +8,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MobileModule = void 0;
 const common_1 = require("@nestjs/common");
+const mobile_service_1 = require("./mobile.service");
+const mobile_controller_1 = require("./mobile.controller");
 let MobileModule = class MobileModule {
 };
 MobileModule = __decorate([
-    (0, common_1.Module)({})
+    (0, common_1.Module)({
+        controllers: [mobile_controller_1.MobileController],
+        providers: [mobile_service_1.MobileService]
+    })
 ], MobileModule);
 exports.MobileModule = MobileModule;
 //# sourceMappingURL=mobile.module.js.map

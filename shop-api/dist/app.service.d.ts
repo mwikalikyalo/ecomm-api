@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { UserDocument } from './users/users.schema';
+import { UserDocument } from './user/entities/user.entity';
 export declare class AppService {
     private userModel;
     constructor(userModel: Model<UserDocument>);
