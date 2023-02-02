@@ -1,4 +1,4 @@
-import { Controller, Request, Post, UseGuards, UnauthorizedException } from '@nestjs/common';
+import { Controller, Request, Post, UseGuards, UnauthorizedException, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/user/entities/user.entity';
@@ -8,7 +8,7 @@ export class AuthController {
     constructor(private authService: AuthService) { }
     
     // @UseGuards(AuthGuard('local'))
-    @Post('/login')
+    @Get('/login')
     async login(@Request() users:User) {
         try {
             const user = await this.authService.validateUser( users.username, users.password);

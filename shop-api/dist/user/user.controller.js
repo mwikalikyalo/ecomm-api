@@ -33,7 +33,7 @@ let UserController = class UserController {
     }
 };
 __decorate([
-    (0, common_1.Get)('/signup'),
+    (0, common_1.Post)('/signup'),
     __param(0, (0, common_1.Body)('name')),
     __param(1, (0, common_1.Body)('email')),
     __param(2, (0, common_1.Body)('username')),

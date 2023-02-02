@@ -6,8 +6,8 @@ import { User, UserDocument } from './user/entities/user.entity';
 @Injectable()
 export class AppService {
   constructor(
-    @InjectModel(User.name)
-      private userModel: Model<UserDocument>,
+  @InjectModel(User.name)
+    private userModel: Model<UserDocument>,
   ) {}
   getHello(): string {
         return 'Hello World!';
@@ -15,9 +15,3 @@ export class AppService {
   }
 }
 
-// @Injectable()
-// export class AppService {
-//   getHello(): string {
-//     return 'Hello World!';
-//   }
-// }

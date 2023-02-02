@@ -23,13 +23,13 @@ AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             user_module_1.UserModule,
-            mongoose_1.MongooseModule.forRoot('mongodb://localhost/shop-api'),
-            mongoose_1.MongooseModule.forFeature([{ name: user_entity_1.User.name, schema: user_entity_1.UserSchema }]),
             delivery_module_1.DeliveryModule,
             card_module_1.CardModule,
             mobile_module_1.MobileModule,
             user_module_1.UserModule,
             auth_module_1.AuthModule,
+            mongoose_1.MongooseModule.forRoot('mongodb://localhost/shop-api'),
+            mongoose_1.MongooseModule.forFeature([{ name: user_entity_1.User.name, schema: user_entity_1.UserSchema }]),
         ],
         controllers: [
             app_controller_1.AppController,
