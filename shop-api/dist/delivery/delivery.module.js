@@ -10,10 +10,12 @@ exports.DeliveryModule = void 0;
 const common_1 = require("@nestjs/common");
 const delivery_service_1 = require("./delivery.service");
 const delivery_controller_1 = require("./delivery.controller");
+const axios_1 = require("@nestjs/axios");
 let DeliveryModule = class DeliveryModule {
 };
 DeliveryModule = __decorate([
     (0, common_1.Module)({
+        imports: [axios_1.HttpModule],
         controllers: [delivery_controller_1.DeliveryController],
         providers: [delivery_service_1.DeliveryService]
     })

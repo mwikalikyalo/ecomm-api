@@ -9,7 +9,7 @@ import { User } from 'src/user/entities/user.entity';
 export class AuthService {
     constructor(private readonly usersService: UserService, private jwtService: JwtService) { }
     
-    async validateUser(username: string, password: string): Promise<User> {
+    async validateUser(username: string, password: string): Promise<any> {
         try {
           const user = await this.usersService.getUser({ username });
           console.log('User object:', user);  

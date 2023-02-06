@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel} from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateDeliveryDto } from './dto/create-delivery.dto';
 import { UpdateDeliveryDto } from './dto/update-delivery.dto';
+import { Delivery, DeliveryDocument } from './entities/delivery.schema';
 
 @Injectable()
 export class DeliveryService {
-  create(createDeliveryDto: CreateDeliveryDto) {
-    return 'This action adds a new delivery';
+
+  constructor(@InjectModel(Delivery.name) private readonly deliveryModel: Model < DeliveryDocument > ) {}
+
+  async create(createDeliveryDto: CreateDeliveryDto): Promise < DeliveryDocument > {
+    const delivery = new this.deliveryModel(createDeliveryDto);
+    return delivery.save();
   }
 
-  findAll() {
-    return `This action returns all delivery`;
+  async findAll(): Promise < DeliveryDocument[] > {
+    return this.deliveryModel.find()
+      .exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} delivery`;
+  async findOne(id: string) {
+    return this.deliveryModel.findById(id);
   }
 
-  update(id: number, updateDeliveryDto: UpdateDeliveryDto) {
-    return `This action updates a #${id} delivery`;
+  async update(id: string, updateDeliveryDto: UpdateDeliveryDto): Promise < DeliveryDocument > {
+    return this.deliveryModel.findByIdAndUpdate(id, updateDeliveryDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} delivery`;
+  async remove(id: string) {
+    return this.deliveryModel.findByIdAndRemove(id);
   }
 }
+
