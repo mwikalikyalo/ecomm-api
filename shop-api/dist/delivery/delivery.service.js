@@ -5,28 +5,44 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeliveryService = void 0;
 const common_1 = require("@nestjs/common");
+const mongoose_1 = require("@nestjs/mongoose");
+const mongoose_2 = require("mongoose");
+const delivery_schema_1 = require("./entities/delivery.schema");
 let DeliveryService = class DeliveryService {
-    create(createDeliveryDto) {
-        return 'This action adds a new delivery';
+    constructor(deliveryModel) {
+        this.deliveryModel = deliveryModel;
     }
-    findAll() {
-        return `This action returns all delivery`;
+    async create(createDeliveryDto) {
+        const delivery = new this.deliveryModel(createDeliveryDto);
+        return delivery.save();
     }
-    findOne(id) {
-        return `This action returns a #${id} delivery`;
+    async findAll() {
+        return this.deliveryModel.find()
+            .exec();
     }
-    update(id, updateDeliveryDto) {
-        return `This action updates a #${id} delivery`;
+    async findOne(id) {
+        return this.deliveryModel.findById(id);
     }
-    remove(id) {
-        return `This action removes a #${id} delivery`;
+    async update(id, updateDeliveryDto) {
+        return this.deliveryModel.findByIdAndUpdate(id, updateDeliveryDto);
+    }
+    async remove(id) {
+        return this.deliveryModel.findByIdAndRemove(id);
     }
 };
 DeliveryService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __param(0, (0, mongoose_1.InjectModel)(delivery_schema_1.Delivery.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model])
 ], DeliveryService);
 exports.DeliveryService = DeliveryService;
 //# sourceMappingURL=delivery.service.js.map

@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+  
   @Post('/signup')
   async createUser(
     @Body('name') name: string,

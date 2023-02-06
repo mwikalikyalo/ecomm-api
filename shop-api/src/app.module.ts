@@ -7,7 +7,10 @@ import { CardModule } from './card/card.module';
 import { MobileModule } from './mobile/mobile.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-
+import { User } from './user/entities/user.entity';
+import { UserSchema } from './user/entities/user.schema';
+import { ConfigModule } from '@nestjs/config';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
@@ -18,13 +21,18 @@ import { AuthModule } from './auth/auth.module';
     MobileModule,
     UserModule,
     AuthModule,
-    // MongooseModule.forRoot(process.env.MONGODB_URI),
-    // MongooseModule.forRoot('mongodb+srv://mwikalikyalo:ch1ch1sam234@cluster0.es6xz7b.mongodb.net/?retryWrites=true&w=majority/auth'),    
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        STRIPE_SECRET_KEY: Joi.string(),
+        STRIPE_CURRENCY: Joi.string(),
+        FRONTEND_URL: Joi.string(),
+      })
+    }),    
   ],
   controllers: [
     AppController,
   ],
-
   providers: [
     AppService,
   ],

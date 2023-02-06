@@ -17,11 +17,9 @@ const common_1 = require("@nestjs/common");
 const delivery_service_1 = require("./delivery.service");
 const create_delivery_dto_1 = require("./dto/create-delivery.dto");
 const update_delivery_dto_1 = require("./dto/update-delivery.dto");
-const axios_1 = require("@nestjs/axios");
 let DeliveryController = class DeliveryController {
-    constructor(deliveryService, httpService) {
+    constructor(deliveryService) {
         this.deliveryService = deliveryService;
-        this.httpService = httpService;
     }
     create(createDeliveryDto) {
         return this.deliveryService.create(createDeliveryDto);
@@ -30,17 +28,17 @@ let DeliveryController = class DeliveryController {
         return this.deliveryService.findAll();
     }
     findOne(id) {
-        return this.deliveryService.findOne(+id);
+        return this.deliveryService.findOne(id);
     }
     update(id, updateDeliveryDto) {
-        return this.deliveryService.update(+id, updateDeliveryDto);
+        return this.deliveryService.update(id, updateDeliveryDto);
     }
     remove(id) {
-        return this.deliveryService.remove(+id);
+        return this.deliveryService.remove(id);
     }
 };
 __decorate([
-    (0, common_1.Post)('/new'),
+    (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_delivery_dto_1.CreateDeliveryDto]),
@@ -60,7 +58,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], DeliveryController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
+    (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -76,7 +74,7 @@ __decorate([
 ], DeliveryController.prototype, "remove", null);
 DeliveryController = __decorate([
     (0, common_1.Controller)('delivery'),
-    __metadata("design:paramtypes", [delivery_service_1.DeliveryService, axios_1.HttpService])
+    __metadata("design:paramtypes", [delivery_service_1.DeliveryService])
 ], DeliveryController);
 exports.DeliveryController = DeliveryController;
 //# sourceMappingURL=delivery.controller.js.map

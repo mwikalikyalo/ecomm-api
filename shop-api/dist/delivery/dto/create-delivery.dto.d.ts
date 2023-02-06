@@ -1,2 +1,3 @@
-export declare class CreateDeliveryDto {
+import { Delivery } from "../entities/delivery.entity";
+export declare class CreateDeliveryDto extends Delivery {
 }
