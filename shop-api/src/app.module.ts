@@ -9,8 +9,9 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { User } from './user/entities/user.entity';
 import { UserSchema } from './user/entities/user.schema';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -21,6 +22,11 @@ import * as Joi from 'joi';
     MobileModule,
     UserModule,
     AuthModule,
+    TypeOrmModule.forRootAsync({
+      useFactory: () => ({
+        type: 'mongodb',
+      }) 
+    }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     ConfigModule.forRoot({
       validationSchema: Joi.object({
@@ -35,6 +41,7 @@ import * as Joi from 'joi';
   ],
   providers: [
     AppService,
+    ConfigService
   ],
 })
 export class AppModule {}

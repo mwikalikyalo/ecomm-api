@@ -12,69 +12,30 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CardController = void 0;
 const common_1 = require("@nestjs/common");
+const jwt_authentication_guard_1 = require("../auth/jwt-authentication.guard");
+const createCharge_dto_1 = require("./dto/createCharge.dto");
 const card_service_1 = require("./card.service");
-const create_card_dto_1 = require("./dto/create-card.dto");
-const update_card_dto_1 = require("./dto/update-card.dto");
 let CardController = class CardController {
     constructor(cardService) {
         this.cardService = cardService;
     }
-    create(createCardDto) {
-        return this.cardService.create(createCardDto);
-    }
-    findAll() {
-        return this.cardService.findAll();
-    }
-    findOne(id) {
-        return this.cardService.findOne(+id);
-    }
-    update(id, updateCardDto) {
-        return this.cardService.update(+id, updateCardDto);
-    }
-    remove(id) {
-        return this.cardService.remove(+id);
+    async create(charge, request) {
+        await this.cardService.charge(charge.amount, charge.paymentMethodId, request.user.stripeCustomerId);
     }
 };
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_card_dto_1.CreateCardDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [createCharge_dto_1.default, Object]),
+    __metadata("design:returntype", Promise)
 ], CardController.prototype, "create", null);
-__decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], CardController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], CardController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_card_dto_1.UpdateCardDto]),
-    __metadata("design:returntype", void 0)
-], CardController.prototype, "update", null);
-__decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], CardController.prototype, "remove", null);
 CardController = __decorate([
-    (0, common_1.Controller)('card'),
+    (0, common_1.Controller)('charge'),
     __metadata("design:paramtypes", [card_service_1.CardService])
 ], CardController);
-exports.CardController = CardController;
+exports.default = CardController;
 //# sourceMappingURL=card.controller.js.map

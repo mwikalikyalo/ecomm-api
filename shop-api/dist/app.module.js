@@ -17,6 +17,10 @@ const mobile_module_1 = require("./mobile/mobile.module");
 const user_module_1 = require("./user/user.module");
 const auth_module_1 = require("./auth/auth.module");
 const user_entity_1 = require("./user/entities/user.entity");
+const user_schema_1 = require("./user/entities/user.schema");
+const config_1 = require("@nestjs/config");
+const Joi = require("joi");
+const typeorm_1 = require("@nestjs/typeorm");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -29,13 +33,26 @@ AppModule = __decorate([
             mobile_module_1.MobileModule,
             user_module_1.UserModule,
             auth_module_1.AuthModule,
-            mongoose_1.MongooseModule.forFeature([{ name: user_entity_1.User.name, schema: user_entity_1.UserSchema }])
+            typeorm_1.TypeOrmModule.forRootAsync({
+                useFactory: () => ({
+                    type: 'mongodb',
+                })
+            }),
+            mongoose_1.MongooseModule.forFeature([{ name: user_entity_1.User.name, schema: user_schema_1.UserSchema }]),
+            config_1.ConfigModule.forRoot({
+                validationSchema: Joi.object({
+                    STRIPE_SECRET_KEY: Joi.string(),
+                    STRIPE_CURRENCY: Joi.string(),
+                    FRONTEND_URL: Joi.string(),
+                })
+            }),
         ],
         controllers: [
             app_controller_1.AppController,
         ],
         providers: [
             app_service_1.AppService,
+            config_1.ConfigService
         ],
     })
 ], AppModule);

@@ -11,16 +11,22 @@ const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
 const user_controller_1 = require("./user.controller");
 const mongoose_1 = require("@nestjs/mongoose");
+const user_schema_1 = require("./entities/user.schema");
+const typeorm_1 = require("@nestjs/typeorm");
+const config_1 = require("@nestjs/config");
+const card_service_1 = require("../card/card.service");
+const user_repository_1 = require("./user.repository");
 const user_entity_1 = require("./entities/user.entity");
 let UserModule = class UserModule {
 };
 UserModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: "user", schema: user_entity_1.UserSchema }])
+            typeorm_1.TypeOrmModule.forFeature([user_repository_1.UserRepository, user_entity_1.User]),
+            mongoose_1.MongooseModule.forFeature([{ name: "user", schema: user_schema_1.UserSchema }])
         ],
         controllers: [user_controller_1.UserController],
-        providers: [user_service_1.UserService],
+        providers: [user_service_1.UserService, card_service_1.CardService, config_1.ConfigService],
         exports: [user_service_1.UserService],
     })
 ], UserModule);

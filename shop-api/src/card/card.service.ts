@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCardDto } from './dto/create-card.dto';
-import { UpdateCardDto } from './dto/update-card.dto';
+import { ConfigService } from '@nestjs/config';
+import Stripe from 'stripe';
 
 @Injectable()
 export class CardService {
-  create(createCardDto: CreateCardDto) {
-    return 'This action adds a new card';
-  }
+  private stripe: Stripe;
 
-  findAll() {
-    return `This action returns all card`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} card`;
-  }
-
-  update(id: number, updateCardDto: UpdateCardDto) {
-    return `This action updates a #${id} card`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} card`;
-  }
+  constructor( private configService: ConfigService) {
+    this.stripe = new Stripe(configService.get('STRIPE_SECRET_KEY'), {
+        apiVersion: '2022-11-15',
+      });
+    }
+    //function calls the Stripe API and returns the data about the Stripe customer.
+    public async createCustomer(name: string, email: string) {
+      return this.stripe.customers.create({
+        name,
+        email
+      });
+    }
+  
+    public async charge(amount: number, paymentMethodId: string, customerId: string) {
+      return this.stripe.paymentIntents.create({
+        amount,
+        customer: customerId,
+        payment_method: paymentMethodId,
+        currency: this.configService.get('STRIPE_CURRENCY'),
+        confirm: true
+      })
+    }
 }

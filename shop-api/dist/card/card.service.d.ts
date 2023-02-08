@@ -1,9 +1,9 @@
-import { CreateCardDto } from './dto/create-card.dto';
-import { UpdateCardDto } from './dto/update-card.dto';
+import { ConfigService } from '@nestjs/config';
+import Stripe from 'stripe';
 export declare class CardService {
-    create(createCardDto: CreateCardDto): string;
-    findAll(): string;
-    findOne(id: number): string;
-    update(id: number, updateCardDto: UpdateCardDto): string;
-    remove(id: number): string;
+    private configService;
+    private stripe;
+    constructor(configService: ConfigService);
+    createCustomer(name: string, email: string): Promise<Stripe.Response<Stripe.Customer>>;
+    charge(amount: number, paymentMethodId: string, customerId: string): Promise<Stripe.Response<Stripe.PaymentIntent>>;
 }

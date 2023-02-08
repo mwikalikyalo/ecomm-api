@@ -1,34 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
+import JwtAuthenticationGuard from '../auth/jwt-authentication.guard';
+import CreateChargeDto from './dto/createCharge.dto';
+import RequestWithUser from '../auth/requestWithUser.interface';
 import { CardService } from './card.service';
-import { CreateCardDto } from './dto/create-card.dto';
-import { UpdateCardDto } from './dto/update-card.dto';
 
-@Controller('card')
-export class CardController {
+
+@Controller('charge')
+export default class CardController {
   constructor(private readonly cardService: CardService) {}
 
   @Post()
-  create(@Body() createCardDto: CreateCardDto) {
-    return this.cardService.create(createCardDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.cardService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cardService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCardDto: UpdateCardDto) {
-    return this.cardService.update(+id, updateCardDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cardService.remove(+id);
+  @UseGuards(JwtAuthenticationGuard)
+  async create(@Body() charge:CreateChargeDto, @Req() request: RequestWithUser ) {
+    await this.cardService.charge(charge.amount, charge.paymentMethodId, request.user.stripeCustomerId);
   }
 }

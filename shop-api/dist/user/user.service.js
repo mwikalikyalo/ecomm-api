@@ -16,10 +16,16 @@ exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const user_schema_1 = require("./entities/user.schema");
 const bcrypt = require("bcrypt");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+const card_service_1 = require("../card/card.service");
 let UserService = class UserService {
-    constructor(userModel) {
+    constructor(userModel, cardService, usersRepository) {
         this.userModel = userModel;
+        this.cardService = cardService;
+        this.usersRepository = usersRepository;
     }
     async createUser(name, email, username, password, country) {
         return this.userModel.create({
@@ -33,6 +39,12 @@ let UserService = class UserService {
     async getUser(query) {
         return this.userModel.findOne(query);
     }
+    async create(users) {
+        const stripeCustomer = await this.cardService.createCustomer(users.name, users.email);
+        const newUser = await this.usersRepository.create(Object.assign(Object.assign({}, users), { stripeCustomerId: stripeCustomer.id }));
+        await this.usersRepository.save(newUser);
+        return newUser;
+    }
     async hashPassword(password) {
         const salt = await bcrypt.genSalt(10, "b");
         return await bcrypt.hash(password, salt);
@@ -44,7 +56,9 @@ let UserService = class UserService {
 UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)('user')),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(2, (0, typeorm_1.InjectRepository)(user_schema_1.User)),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        card_service_1.CardService, typeorm_2.Repository])
 ], UserService);
 exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

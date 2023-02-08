@@ -10,12 +10,13 @@ exports.CardModule = void 0;
 const common_1 = require("@nestjs/common");
 const card_service_1 = require("./card.service");
 const card_controller_1 = require("./card.controller");
+const config_1 = require("@nestjs/config");
 let CardModule = class CardModule {
 };
 CardModule = __decorate([
     (0, common_1.Module)({
-        controllers: [card_controller_1.CardController],
-        providers: [card_service_1.CardService]
+        controllers: [card_controller_1.default],
+        providers: [card_service_1.CardService, config_1.ConfigService]
     })
 ], CardModule);
 exports.CardModule = CardModule;
