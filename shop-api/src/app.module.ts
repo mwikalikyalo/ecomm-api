@@ -15,19 +15,21 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/shop-api'), 
+    MongooseModule.forRoot('mongodb://localhost/shop-api'),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]), 
     UserModule,
     DeliveryModule,
     CardModule,
     MobileModule,
     UserModule,
     AuthModule,
+    
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         type: 'mongodb',
       }) 
     }),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         STRIPE_SECRET_KEY: Joi.string(),
@@ -36,9 +38,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       })
     }),    
   ],
+
   controllers: [
     AppController,
   ],
+  
   providers: [
     AppService,
     ConfigService

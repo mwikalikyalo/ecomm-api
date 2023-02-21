@@ -12,7 +12,6 @@ export class UserRepository extends Repository<User> {
       createUserDto.name,
       createUserDto.email,
     );
-    
     const user = this.create({
       ...createUserDto,
       stripeCustomerId: stripeCustomer.id,

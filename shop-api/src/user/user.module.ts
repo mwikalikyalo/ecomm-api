@@ -11,8 +11,6 @@ import { User } from './entities/user.entity';
 
 @Module({
   imports: [
-  //   MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-  // ],
     TypeOrmModule.forFeature([UserRepository, User]),
     MongooseModule.forFeature([{ name: "user", schema: UserSchema }])
   ],

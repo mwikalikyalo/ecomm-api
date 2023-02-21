@@ -13,7 +13,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
-const jwt_authentication_guard_1 = require("../auth/jwt-authentication.guard");
 const createCharge_dto_1 = require("./dto/createCharge.dto");
 const card_service_1 = require("./card.service");
 let CardController = class CardController {
@@ -26,7 +25,6 @@ let CardController = class CardController {
 };
 __decorate([
     (0, common_1.Post)(),
-    (0, common_1.UseGuards)(jwt_authentication_guard_1.default),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),

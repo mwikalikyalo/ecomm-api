@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
+const passport_1 = require("@nestjs/passport");
 const user_entity_1 = require("../user/entities/user.entity");
 let AuthController = class AuthController {
     constructor(authService) {
@@ -42,6 +43,7 @@ let AuthController = class AuthController {
     }
 };
 __decorate([
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('local')),
     (0, common_1.Get)('/login'),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),

@@ -28,7 +28,7 @@ let CardService = class CardService {
     }
     async charge(amount, paymentMethodId, customerId) {
         return this.stripe.paymentIntents.create({
-            amount,
+            amount: amount,
             customer: customerId,
             payment_method: paymentMethodId,
             currency: this.configService.get('STRIPE_CURRENCY'),

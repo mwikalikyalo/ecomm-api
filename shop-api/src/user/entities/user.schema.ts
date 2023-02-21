@@ -1,25 +1,26 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Exclude } from 'class-transformer';
 import { Document } from 'mongoose';
 
 export type UserDocument = User & Document;
 
 @Schema()
 export class User {
-
 @Prop()
-  _id: String;
+  public _id: String;
 @Prop()
-  name:string;
+  public name:string;
 @Prop()
-  email:string;
+  public email:string;
 @Prop()
-  username:string;
+  public username:string;
 @Prop()
-  password:string;
+@Exclude()
+  public password:string;
 @Prop()
-  country:string;
+  public country:string;
 @Prop()
-  stripeCustomerId: string;
+  public stripeCustomerId: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

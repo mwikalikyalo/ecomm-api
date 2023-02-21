@@ -39,7 +39,7 @@ let UserService = class UserService {
     async getUser(query) {
         return this.userModel.findOne(query);
     }
-    async create(users) {
+    async makePayments(users) {
         const stripeCustomer = await this.cardService.createCustomer(users.name, users.email);
         const newUser = await this.usersRepository.create(Object.assign(Object.assign({}, users), { stripeCustomerId: stripeCustomer.id }));
         await this.usersRepository.save(newUser);
@@ -52,13 +52,19 @@ let UserService = class UserService {
     async comparePassword(password, hash) {
         return await bcrypt.compare(password, hash);
     }
+    async update(id, updateUserDto) {
+        return this.userModel.findByIdAndUpdate(id, updateUserDto);
+    }
+    async remove(id) {
+        return this.userModel.findByIdAndRemove(id);
+    }
 };
 UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)('user')),
     __param(2, (0, typeorm_1.InjectRepository)(user_schema_1.User)),
-    __metadata("design:paramtypes", [mongoose_2.Model,
-        card_service_1.CardService, typeorm_2.Repository])
+    __metadata("design:paramtypes", [mongoose_2.Model, card_service_1.CardService,
+        typeorm_2.Repository])
 ], UserService);
 exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

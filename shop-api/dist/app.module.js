@@ -27,6 +27,7 @@ AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             mongoose_1.MongooseModule.forRoot('mongodb://localhost/shop-api'),
+            mongoose_1.MongooseModule.forFeature([{ name: user_entity_1.User.name, schema: user_schema_1.UserSchema }]),
             user_module_1.UserModule,
             delivery_module_1.DeliveryModule,
             card_module_1.CardModule,
@@ -38,7 +39,6 @@ AppModule = __decorate([
                     type: 'mongodb',
                 })
             }),
-            mongoose_1.MongooseModule.forFeature([{ name: user_entity_1.User.name, schema: user_schema_1.UserSchema }]),
             config_1.ConfigModule.forRoot({
                 validationSchema: Joi.object({
                     STRIPE_SECRET_KEY: Joi.string(),

@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -13,8 +14,7 @@ export class UserController {
     @Body('email') email: string,
     @Body('username') username: string,
     @Body('password') password: string,
-    @Body('country') country: string,
-  ): Promise<User | Error> {
+    @Body('country') country: string,): Promise<User | Error> {
     try {
       const saltOrRounds = await bcrypt.genSalt(10, 'b');
       const hashedPassword = await bcrypt.hash(password, saltOrRounds);
@@ -29,6 +29,21 @@ export class UserController {
     } catch (error) {
       return error;
     }
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id:object ) {
+    return this.userService.getUser(id);
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.update(id, updateUserDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.userService.remove(id);
   }
   
 }

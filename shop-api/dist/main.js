@@ -6,13 +6,10 @@ const config_1 = require("@nestjs/config");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     const configService = app.get(config_1.ConfigService);
-    app.enableCors({
-        origin: configService.get('FRONTEND_URL'),
-        credentials: true
-    });
     const corsOptions = {
         origin: '*',
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        credentials: true,
     };
     await app.listen(3000);
 }

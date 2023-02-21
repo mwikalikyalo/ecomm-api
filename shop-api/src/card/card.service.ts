@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Stripe from 'stripe';
 
+
 @Injectable()
 export class CardService {
   private stripe: Stripe;
@@ -21,7 +22,7 @@ export class CardService {
   
     public async charge(amount: number, paymentMethodId: string, customerId: string) {
       return this.stripe.paymentIntents.create({
-        amount,
+        amount:amount,
         customer: customerId,
         payment_method: paymentMethodId,
         currency: this.configService.get('STRIPE_CURRENCY'),

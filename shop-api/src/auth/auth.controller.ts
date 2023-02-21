@@ -1,12 +1,13 @@
-import { Controller, Request, UnauthorizedException, Get } from '@nestjs/common';
+import { Controller, Request, UnauthorizedException, Get, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-// import { AuthGuard } from '@nestjs/passport';
+import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/user/entities/user.entity';
 
 @Controller()
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
-    // @UseGuards(AuthGuard('local'))
+    @UseGuards(AuthGuard('local'))
+    
     @Get('/login')
     async login(@Request() users:User) {
         try {
@@ -23,7 +24,6 @@ export class AuthController {
           if (err instanceof UnauthorizedException) {
             return { statusCode: 401, message: err.message };
           }
-            
             console.error('Error in login endpoint:', err); 
             return { statusCode: 500, message: 'Internal Server Error' };
           }
